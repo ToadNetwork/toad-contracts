@@ -1,4 +1,4 @@
-pragma solidity ^0.5.10;
+pragma solidity ^0.5.17;
 
 library SafeMath {
     function mul(uint256 a, uint256 b) internal pure returns (uint256 c) {
@@ -36,8 +36,8 @@ contract TOKEN {
 }
 
 contract Ownable {
-    address public dev1 = address(0xF4210B747e44592035da0126f70C48Cb04634Eac);
-    address public dev2 = address(0xB173500160B809AAA5136777113d313Dd4eFBCc7);
+    address public dev1 = address(0xa354bC96fE245a16DC74868766caF08B445dF195); //ToadGuy
+    address public dev2 = address(0x487E861a33699dE14014f0f19dad92286c3C4e07); //Snake
 
     mapping(address => bool) public ownerByAddress;
 
@@ -56,12 +56,6 @@ contract DevLock is Ownable {
     using SafeMath for uint256;
 
     mapping(address => bool) public isLocked;
-    uint256 ACTIVATION_TIME = 1616432400;
-
-    modifier isActivated {
-        require(now >= ACTIVATION_TIME);
-        _;
-    }
 
     modifier hasDripped {
         require(isLocked[dev1] == false && isLocked[dev2] == false);
@@ -136,7 +130,7 @@ contract DevLock is Ownable {
     }
 
     uint256 public dividendPool = 0;
-    uint256 public lastDripTime = ACTIVATION_TIME;
+    uint256 public lastDripTime = now;
     uint256 public totalPlayer = 0;
     uint256 public totalDonation = 0;
 
@@ -203,7 +197,7 @@ contract DevLock is Ownable {
         return _amountOfTokens;
     }
 
-    function purchaseTokens(address _customerAddress, uint256 _incomingTokens) isActivated private returns (uint256) {
+    function purchaseTokens(address _customerAddress, uint256 _incomingTokens) private returns (uint256) {
         require(_incomingTokens > 0);
 
         uint256 _amountOfTokens = _purchaseTokens(_customerAddress, _incomingTokens);
@@ -213,7 +207,7 @@ contract DevLock is Ownable {
         return _amountOfTokens;
     }
 
-    function removeSharesFor(address _devAddress, uint256 _shares) isActivated hasDripped onlyOwners public {
+    function removeSharesFor(address _devAddress, uint256 _shares) hasDripped onlyOwners public {
         address _customerAddress =_devAddress;
         require(_shares > 0 && _shares <= tokenBalanceLedger[_customerAddress]);
 
@@ -222,8 +216,6 @@ contract DevLock is Ownable {
 
         int256 _updatedPayouts = (int256) (profitPerShare * _shares);
         payoutsTo[_customerAddress] -= _updatedPayouts;
-
-        bep20.transfer(_customerAddress, _shares);
 
         emit Transfer(_customerAddress, address(0), _shares);
         emit onRemoveShares(_customerAddress, _shares, _shares, now);
