@@ -1,0 +1,38 @@
+{
+  "name": "toad-contracts",
+  "version": "0.0.3",
+  "description": "toad.network smart contracts",
+  "main": "index.js",
+  "scripts": {
+    "check-env": "node -e 'console.log(process.env)' | grep npm",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ToadNetwork/toad-contracts.git"
+  },
+  "keywords": [
+    "solidity",
+    "web3",
+    "defi",
+    "toad.network"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ToadNetwork/toad-contracts/issues"
+  },
+  "homepage": "https://github.com/ToadNetwork/toad-contracts#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "fs-extra": "^10.1.0",
+    "hardhat": "^2.14.1",
+    "log4js": "^6.4.1",
+    "npm-run": "^5.0.1",
+    "solc": "^0.7.3"
+  },
+  "dependencies": {
+    "@openzeppelin/test-helpers": "^0.5.16",
+    "dotenv": "^16.1.3"
+  }
+}

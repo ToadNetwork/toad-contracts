@@ -39,3 +39,28 @@ All smart contracts related to [toad.network](https://toad.network)
 - The smart contract has been pre-funded with all the liquidity that was added by the team.
 - The reward pool drips 1% of its value every day and distributes those LP tokens to the stakers based on their share.
 - It also requires the stakers to pay a 10% fee when depositing and removing their LP tokens from the smart contract. Those fees go back to the farming pool. By implementing this mechanism the DPLP makes sure the reward pool will never run out. Therefore creating perpetual incentives to keep providing liquidity for TOAD. 
+
+## testing
+
+### HowTo test this
+
+1. Clone project and enter the 'toad-contracts' folder.
+```sh
+git clone git@github.com:ToadNetwork/toad-contracts.git
+```
+2. Install project dependencies
+```sh
+npm i
+```
+
+3. compile the artifacts with hardhat
+```sh
+npx hardhat compile
+```
+
+4. run the test that you want to (i.e., Toad's tests):
+```sh
+npx hardhat test test\01_Toad_token.js
+```
+
+Results are printed as per execution.
