@@ -4,7 +4,6 @@ const test_utils = require("../utils/test_utils");
 
 describe("ERC20 token basic checks", function () {
 
-  let token, owner, account1, account2;
   let name = 'Toad Network';
   let symbol = 'TOAD';
   let initialSupply = '200000';
@@ -12,14 +11,14 @@ describe("ERC20 token basic checks", function () {
 
   before(async () => {
     const Token = (await ethers.getContractFactory("Toad"));
-    token = await Token.deploy();
-    await token.deployed();
+    let _token = await Token.deploy();
+    await _token.deployed();
 
     [_owner, _account1] = await ethers.getSigners();
     environment = {
       owner: _owner,
       account1: _account1,
-      token: token
+      token: _token
     }
 
     console.log(`contract address(signer): ${environment.token.address}(${environment.token.signer.address})`);
@@ -138,9 +137,9 @@ describe("ERC20 token basic checks", function () {
     it("should transfer 100 tokens from owner to account1", async function () {
 
       let amount = ethers.utils.parseUnits('100');
-      expect(await token.allowance(environment.owner.address, environment.account1.address)).to.be.greaterThan(amount);
-      expect(await token.balanceOf(environment.owner.address)).to.be.greaterThanOrEqual(amount);
-      expect(await token.transfer(environment.account1.address, amount)).to.changeEtherBalances(
+      expect(await environment.token.allowance(environment.owner.address, environment.account1.address)).to.be.greaterThan(amount);
+      expect(await environment.token.balanceOf(environment.owner.address)).to.be.greaterThanOrEqual(amount);
+      expect(await environment.token.transfer(environment.account1.address, amount)).to.changeEtherBalances(
         [environment.owner.address, environment.account1.address],
         [-'100', '100']
       );
