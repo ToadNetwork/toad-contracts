@@ -110,7 +110,22 @@ npx hardhat compile
 4. run the test that you want to (i.e., Toad's tests):
 
 ```sh
-npx hardhat test test\01_Toad_token.js
+npx hardhat test test/01-toad_token-details.js
+```
+
+5. run all the tests under test folder:
+
+```sh
+npx hardhat test
 ```
 
 Results are printed as per execution.
+
+### Some helpful resources (thanks!):
+
+- [other ways of testing](https://ethereum.stackexchange.com/questions/110762/testing-arguments-of-contract-events-with-hardhat-chai).
+- [BigNumberErrors](https://ethereum.stackexchange.com/questions/135384/ethers-js-bignumber-errors).
+- [BigNumberErrors2](https://ethereum.stackexchange.com/questions/103921/how-do-i-use-bignumber-values-in-hardhat-tests).
+- [Alloweddperator](https://ethereum.stackexchange.com/questions/143739/testing-safetransferfrom-with-onlyallowedoperator-using-chai-hardhat).
+- [EventProcessing](https://ethereum.stackexchange.com/questions/110004/testing-for-emitted-events-in-hardhat).
+- [ExpectOperationsReverted](https://ethereum.stackexchange.com/questions/140035/hardhat-and-chai-testing-how-should-i-write-the-test).
