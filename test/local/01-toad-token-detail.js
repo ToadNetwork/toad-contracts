@@ -1,6 +1,20 @@
 // We import Chai to use its asserting functions here.
 const { expect } = require("chai");
-const test_utils = require("../utils/test_utils");
+const test_utils = require("../../utils/test_utils");
+
+//initialise logging
+const log4js = require("log4js");
+const log = log4js.getLogger("01-token-details");
+
+// Initialize log
+log4js.configure({
+  appenders: {
+    console: { type: "console" },
+  },
+  categories: {
+    default: { appenders: ["console"], level: "debug" },
+  },
+});
 
 describe("ERC20 basic checks", function () {
 
@@ -21,11 +35,12 @@ describe("ERC20 basic checks", function () {
       token: _token
     }
 
-    console.log(`contract address(signer): ${environment.token.address}(${environment.token.signer.address})`);
-    console.log(`owner: ${environment.owner.address}`);
-    console.log(`acc1: ${environment.account1.address}`);
+    log.info(`contract address(signer): ${environment.token.address}(${environment.token.signer.address})`);
+    log.info(`owner: ${environment.owner.address}`);
+    log.info(`acc1: ${environment.account1.address}`);
 
   })
+
   describe("Initial setup", function () {
 
     it("should be signed by acc0", async () => {

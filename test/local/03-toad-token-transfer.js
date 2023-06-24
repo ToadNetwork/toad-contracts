@@ -1,6 +1,20 @@
 // We import Chai to use its asserting functions here.
 const { expect } = require("chai");
-const test_utils = require("../utils/test_utils");
+const test_utils = require("../../utils/test_utils");
+
+//initialise logging
+const log4js = require("log4js");
+const log = log4js.getLogger("03-token-transfer");
+
+// Initialize log
+log4js.configure({
+  appenders: {
+    console: { type: "console" },
+  },
+  categories: {
+    default: { appenders: ["console"], level: "debug" },
+  },
+});
 
 describe("ERC20 transfer checks", function () {
 
@@ -24,6 +38,9 @@ describe("ERC20 transfer checks", function () {
     console.log(`contract address(signer): ${environment.token.address}(${environment.token.signer.address})`);
     console.log(`owner: ${environment.owner.address}`);
     console.log(`acc1: ${environment.account1.address}`);
+
+    await test_utils.tokenBalances("Balances at start", environment);
+    await test_utils.tokenAllowances("Allowances at start:", environment);
 
   })
 
@@ -54,12 +71,24 @@ describe("ERC20 transfer checks", function () {
 
     });
 
-    it("should fail transferring 199901 tokens from owner to account1", async function () {
+    it("should fail transferring 101 tokens from account1 to owner, balance exceeded", async function () {
 
-      let amount = ethers.utils.parseUnits('199900');
-      expect(await environment.token.transfer(environment.owner.address,environment.account1.address, amount)).to.be.revertedWith('ERC20: transfer amount exceeds balance');
-      await test_utils.tokenBalances("AFTER transfer", environment);
-      await test_utils.tokenAllowances("AFTER transfer", environment);
+      let amount = ethers.utils.parseUnits('101', decimals);
+
+      await expect(environment.token.connect(environment.account1).transfer(environment.owner.address, amount))
+        .to.be.revertedWith('ERC20: transfer amount exceeds balance');
+
+    });
+
+    it("should transfer 50 tokens from account1 to owner", async function () {
+
+      let amount = ethers.utils.parseUnits('50', decimals);
+
+      expect(await environment.token.balanceOf(environment.account1.address)).to.be.greaterThanOrEqual(amount);
+      expect(await environment.token.connect(environment.account1).transfer(environment.owner.address, amount)).to.changeEtherBalances(
+        [environment.account1.address, environment.owner.address],
+        [-'50', '50']
+      );
 
     });
 
