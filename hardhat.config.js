@@ -9,7 +9,7 @@ const configFileDetails = require("./utils/configEnv.js").getConfigFile('./.conf
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  defaultNetwork: "hardhat",
+  //defaultNetwork: "hardhat",
   solidity: {
     version: "0.7.6",
     settings: {
@@ -27,7 +27,7 @@ module.exports = {
       accounts: [PRIVATE_KEY_1, PRIVATE_KEY_2]
     },
     mumbai: {
-      url: configFileDetails.NODE_HTTP_URL_MUMBAI,
+      url: process.env.NODE_HTTP_URL_MUMBAI,
       accounts: [PRIVATE_KEY_1, PRIVATE_KEY_2]
     },
     testbsc: {

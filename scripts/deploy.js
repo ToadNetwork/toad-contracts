@@ -1,40 +1,40 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
-const hre = require("hardhat");
-
-//initialise logging
-const log4js = require("log4js");
-const log = log4js.getLogger("deploy");
-
-// Initialize log
-log4js.configure({
-    appenders: {
-        console: { type: "console" },
-    },
-    categories: {
-        default: { appenders: ["console"], level: "debug" },
-    }
-});
+const { ethers } = require("hardhat");
 
 async function main() {
+  /*
+ A ContractFactory in ethers.js is an abstraction used to deploy new smart contracts,
+ so Contract here is a factory for instances of our deployedContract.
+ */
+  const myContract = await ethers.getContractFactory("Toad");
+  // deploy the contract
+  const deployedContract = await myContract.deploy();
 
-  const Contract = await hre.ethers.getContractFactory("Toad");
-  const contract = await Contract.deploy();
+  await deployedContract.deployed();
 
-  await toad.deployed();
-
-  log.info(
-    `Smart Contract deployed to ${contract.address}`
+  // print the address of the deployed contract
+  console.log(
+    "Verify Contract Address:",
+    deployedContract.address
   );
+
+ 
+  console.log("Sleeping.....");
+  // Wait for etherscan to notice that the contract has been deployed
+  await sleep(30000);
+ 
+  // Verify the contract after deploying in Ether-Polygon Scan web
+  await hre.run("verify:verify", { address: deployedContract.address });
+
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-main().catch((error) => {
-  log.error(error);
-  process.exitCode = 1;
-});
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Call the main function and catch if there is any error
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
