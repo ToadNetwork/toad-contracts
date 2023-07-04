@@ -174,7 +174,7 @@ describe("Toad test-suite", function () {
       expect(await environment.token.balanceOf(environment.account1.address)).to.be.greaterThanOrEqual(amount);
       expect(await environment.token.connect(environment.account1).transfer(environment.owner.address, amount)).to.changeEtherBalances(
         [environment.account1.address, environment.owner.address],
-        [-'15', '15']
+        [-amount, amount]
       );
 
     });
