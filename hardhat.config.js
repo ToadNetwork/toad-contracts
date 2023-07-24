@@ -11,7 +11,7 @@ const configFileDetails = require("./utils/configEnv.js").getConfigFile('./.conf
 module.exports = {
   //defaultNetwork: "hardhat",
   solidity: {
-    version: "0.7.6",
+    version: "0.5.17", //"0.7.6" "0.5.10"
     settings: {
       optimizer: {
         enabled: true,

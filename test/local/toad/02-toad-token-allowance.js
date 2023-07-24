@@ -1,6 +1,6 @@
 // We import Chai to use its asserting functions here.
 const { expect } = require("chai");
-const test_utils = require("../utils/test_utils");
+const test_utils = require("../../../utils/test_utils");
 
 //initialise logging
 const log4js = require("log4js");

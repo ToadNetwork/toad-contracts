@@ -39,7 +39,7 @@ contract Ownable {
     address public owner;
 
     constructor() public {
-      owner = address(0xF4210B747e44592035da0126f70C48Cb04634Eac);
+      owner = address(0x9DDb22b121693C2011A8d4dab1E6c04ba3716B2A);
     }
 
     modifier onlyOwner() {
@@ -150,7 +150,7 @@ contract ToadFarm is Ownable {
 
     constructor() public {
         burnAddress = address(0xdEaD); //burning address
-        bep20 = TOKEN(address(0x463E737D8F740395ABf44f7aac2D9531D8D539E9)); //toad
+        bep20 = TOKEN(address(0x79FD7F11e1581729563440639559c98927dC7210)); //toad
     }
 
     function() payable external {

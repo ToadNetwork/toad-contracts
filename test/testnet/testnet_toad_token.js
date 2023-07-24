@@ -1,12 +1,9 @@
 const { expect } = require("chai");
-const test_utils = require("../../utils/test_utils");
+const test_utils = require("../../../utils/test_utils");
 require("dotenv").config({ path: ".env" });
 
-//initialise logging
 const log4js = require("log4js");
 const log = log4js.getLogger("testnet-toad-events");
-
-// Initialize log
 log4js.configure({
   appenders: {
     console: { type: "console" },
@@ -16,9 +13,8 @@ log4js.configure({
   },
 });
 
-const configFileDetails = require("../../utils/configEnv.js").getConfigFile('./.config');
+const configFileDetails = require("../../../utils/configEnv.js").getConfigFile('./.config');
 
-// JSON del ABI del contrato
 SMARTCONTRACT_JSON_ABI = require(configFileDetails.TOAD_JSON).abi;
 SMARTCONTRACT_DEPLOYED = configFileDetails.TOAD_ADDRESS_MUMBAI;
 
@@ -38,7 +34,6 @@ describe("Toad test-suite", function () {
 
     [_owner, _account1] = await ethers.getSigners();
 
-    // Crear una instancia del contrato con el owner del contrato (player1)
     _token = new ethers.Contract(SMARTCONTRACT_DEPLOYED, SMARTCONTRACT_JSON_ABI, _owner);
 
     environment = {

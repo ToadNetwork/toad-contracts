@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "check-env": "node -e 'console.log(process.env)' | grep npm",
+    "generate-env": "secure-env .env -s ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +30,7 @@
     "hardhat": "^2.14.1",
     "hardhat-gas-reporter": "^1.0.9",
     "log4js": "^6.4.1",
+    "secure-env": "1.2.0",
     "solc": "^0.7.3",
     "toml": "^3.0.0"
   },
